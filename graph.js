@@ -29,6 +29,8 @@ export const testGraph = async () => {
     console.log("Nodes registered:", [NODES.PROFILE_COLLECTOR])
 }
 
+
+
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
     await testGraph()
 

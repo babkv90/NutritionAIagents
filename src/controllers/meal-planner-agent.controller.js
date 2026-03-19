@@ -7,8 +7,7 @@ export const handleAgentMessage = async (req, res) => {
         const { message, userId, sessionId } = req.body
         // ← NOTICE: no more currentState from client
 
-        console.log("▶ Message received:", message)
-        console.log("▶ Session ID:",      sessionId)
+      
 
         // Step 1 — Load existing state from server
         // Client does NOT need to send state anymore
@@ -45,7 +44,6 @@ export const handleAgentMessage = async (req, res) => {
                 sessionId
             }
 
-        console.log("▶ Messages in history:", inputState.messages.length)
 
         // Step 3 — Run agent
         const result = await agent.invoke(inputState)

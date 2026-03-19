@@ -338,3 +338,8 @@ node graph.js
 ## Summary
 
 This project is currently a session-based conversational backend for a nutrition assistant. The production shape is already visible: Express handles requests, the controller manages turn-by-turn state, LangGraph encapsulates workflow execution, and nodes perform focused reasoning tasks. Right now the implementation is in an early but coherent stage, centered around profile collection as the first step in a larger meal-planning agent pipeline.
+
+
+
+
+ npx @langchain/langgraph-cli dev
