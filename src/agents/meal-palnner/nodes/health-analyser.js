@@ -31,3 +31,5 @@ const result = await analyzeHealthChain.invoke({
     medicalConditions: "none",
     dietaryRestrictions: "vegetarian"
 })  
+
+co
