@@ -97,6 +97,12 @@ const getMissingField = (profile) => {
     return null
 }
 
+const createAssistantMessage = (content) => ({
+    role: "assistant",
+    content,
+    nodeId: "profile_collector",
+})
+
 
 // ── Main Node Function ────────────────────────────────
 export async function profileCollectorNode(state) {
@@ -118,17 +124,9 @@ export async function profileCollectorNode(state) {
         })
 
         return {
-            ...state,
             nodeComplete: false,
             currentNode: "profile_collector",
-            messages: [
-                ...state.messages,
-                {
-                    role: "assistant",
-                    content: result,
-                    nodeId: "profile_collector"
-                }
-            ]
+            messages: [createAssistantMessage(result)]
         }
     }
 
@@ -164,26 +162,20 @@ export async function profileCollectorNode(state) {
             console.log("  ✅ Profile complete")
 
             return {
-                ...state,
                 profile: updatedProfile,
                 nodeComplete: true,
-                currentNode: "health_analyser",
-                messages: [
-                    ...state.messages,
-                    {
-                        role: "assistant",
-                        // FIX: No LLM call here — just a
-                        // hardcoded confirmation message
-                        // Avoids unnecessary API call
-                        content: `Perfect! Here is what I have:
-Age: ${updatedProfile.age}
-Gender: ${updatedProfile.gender}
-Activity Level: ${updatedProfile.activityLevel}
+                currentNode: "profile_collector",
+                messages: [createAssistantMessage(
+                    // FIX: No LLM call here — just a
+                    // hardcoded confirmation message
+                    // Avoids unnecessary API call
+                    `Perfect! Here is what I have:
+                        Age: ${updatedProfile.age}
+                        Gender: ${updatedProfile.gender}
+                        Activity Level: ${updatedProfile.activityLevel}
 
-Let me now check your health metrics.`,
-                        nodeId: "profile_collector"
-                    }
-                ]
+                        Let me now check your health metrics.`
+                )]
             }
         }
 
@@ -197,26 +189,17 @@ Let me now check your health metrics.`,
         })
 
         return {
-            ...state,
             profile: updatedProfile,
             nodeComplete: false,
             currentNode: "profile_collector",
-            messages: [
-                ...state.messages,
-                {
-                    role: "assistant",
-                    content: nextQuestion,
-                    nodeId: "profile_collector"
-                }
-            ]
+            messages: [createAssistantMessage(nextQuestion)]
         }
     }
 
 
     // ── Already complete — move forward ───────────────
     return {
-        ...state,
         nodeComplete: true,
-        currentNode: "health_analyser"
+        currentNode: "profile_collector"
     }
 }

@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NutritionAIagents Interview Guide</title>
+  <style>
+    :root {
+      --bg: #f6f1e8;
+      --paper: #fffdf9;
+      --ink: #1f2a2e;
+      --muted: #57646b;
+      --line: #d8ccbc;
+      --accent: #17594a;
+      --accent-2: #c96b2c;
+      --accent-3: #8f3d52;
+      --soft: #f0e7da;
+      --soft-2: #eef6f3;
+      --shadow: 0 18px 40px rgba(36, 33, 28, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 16px;
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top left, rgba(201, 107, 44, 0.08), transparent 26%),
+        radial-gradient(circle at top right, rgba(23, 89, 74, 0.12), transparent 22%),
+        linear-gradient(180deg, #f7f2ea 0%, #f0e8db 100%);
+      color: var(--ink);
+      font-family: "Segoe UI", Aptos, Calibri, sans-serif;
+      line-height: 1.6;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      padding: 18mm 16mm;
+    }
+
+    .sheet {
+      background: var(--paper);
+      border: 1px solid rgba(137, 116, 86, 0.18);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 18mm 16mm;
+      margin-bottom: 12mm;
+    }
+
+    .cover {
+      position: relative;
+      overflow: hidden;
+      min-height: 255mm;
+    }
+
+    .cover::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(23, 89, 74, 0.08), transparent 40%),
+        linear-gradient(315deg, rgba(201, 107, 44, 0.08), transparent 38%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--soft-2);
+      color: var(--accent);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.15;
+      margin: 0 0 12px;
+      color: #152124;
+    }
+
+    h1 {
+      font-size: 2.7rem;
+      margin-top: 18px;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      margin-top: 28px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h3 {
+      font-size: 1.18rem;
+      margin-top: 20px;
+    }
+
+    p {
+      margin: 0 0 12px;
+      color: var(--ink);
+    }
+
+    .lead {
+      font-size: 1.08rem;
+      max-width: 44rem;
+      color: #2e3a3f;
+    }
+
+    .meta {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .meta-card,
+    .card {
+      background: linear-gradient(180deg, #fffdf9 0%, #fbf7f1 100%);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px 18px;
+    }
+
+    .meta-card strong {
+      display: block;
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 18px;
+      margin-top: 16px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .callout {
+      border-left: 4px solid var(--accent-2);
+      background: #fff6ef;
+      border-radius: 14px;
+      padding: 14px 16px;
+      color: #55311e;
+      margin: 14px 0;
+    }
+
+    ul, ol {
+      margin: 8px 0 14px 22px;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    code {
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.93em;
+      background: #f4efe8;
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+
+    pre {
+      margin: 12px 0 16px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: #1e2428;
+      color: #edf3f4;
+      overflow: auto;
+      font-size: 0.88rem;
+      line-height: 1.45;
+    }
+
+    .section-intro {
+      color: #334249;
+      max-width: 48rem;
+      margin-bottom: 10px;
+    }
+
+    .flow-wrap {
+      margin: 18px 0 24px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: linear-gradient(180deg, #fffdfa 0%, #f7f1e7 100%);
+    }
+
+    .tag {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      background: var(--soft-2);
+      color: var(--accent);
+      margin-right: 6px;
+      margin-bottom: 6px;
+    }
+
+    .small {
+      font-size: 0.92rem;
+    }
+
+    .page-break {
+      break-before: page;
+      page-break-before: always;
+    }
+
+    .footer-note {
+      margin-top: 20px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    svg text {
+      font-family: "Segoe UI", Aptos, Calibri, sans-serif;
+      fill: #213137;
+    }
+
+    @page {
+      size: A4;
+      margin: 10mm;
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+      }
+
+      .page {
+        width: auto;
+        min-height: auto;
+        margin: 0;
+        padding: 0;
+      }
+
+      .sheet {
+        margin: 0 0 8mm;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="sheet cover">
+      <span class="eyebrow">Interview Guide</span>
+      <h1>NutritionAIagents</h1>
+      <p class="lead">
+        A stateful meal-planner backend built with Express, LangChain, and LangGraph,
+        designed around a supervisor-driven conversational workflow.
+      </p>
+
+      <div class="meta">
+        <div class="meta-card">
+          <strong>Core Pattern</strong>
+          Supervisor / Router Graph
+        </div>
+        <div class="meta-card">
+          <strong>Main Outcome</strong>
+          Multi-turn meal planning with persisted session state
+        </div>
+        <div class="meta-card">
+          <strong>Best Interview Angle</strong>
+          Stateful orchestration, not just prompt engineering
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top: 28px;">
+        <div>
+          <h2 style="margin-top: 0;">What This System Does</h2>
+          <ol>
+            <li>Collects profile information</li>
+            <li>Collects health measurements and derives metrics</li>
+            <li>Collects location and food preferences</li>
+            <li>Generates a localized weekly meal plan</li>
+            <li>Explains the plan and supports follow-up questions</li>
+          </ol>
+
+          <div class="callout">
+            The important engineering problem is not meal generation alone. The real
+            challenge is controlled multi-turn progression with resumable server-owned state.
+          </div>
+        </div>
+        <div class="card">
+          <h3 style="margin-top: 0;">Tech Stack</h3>
+          <p><span class="tag">Node.js</span><span class="tag">Express 5</span><span class="tag">LangChain</span><span class="tag">LangGraph</span><span class="tag">OpenAI</span></p>
+          <p class="small muted">
+            Session storage is currently an in-memory <code>Map</code>. This is good for
+            prototyping and interview demos, but not for production persistence.
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-note">
+        Prepared as an interview document: architecture first, prompt details second.
+      </div>
+    </section>
+
+    <section class="sheet page-break">
+      <h2>System Design</h2>
+      <p class="section-intro">
+        The backend is organized as an API-driven workflow executor. Each user message
+        becomes one graph invocation. The controller loads the saved session state,
+        invokes the workflow, stores the new state, and returns only the latest assistant response.
+      </p>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3 style="margin-top: 0;">API Layer</h3>
+          <ul>
+            <li><code>POST /api/agent/message</code></li>
+            <li><code>POST /api/agent/reset</code></li>
+            <li><code>POST /api/agent/extension</code></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 style="margin-top: 0;">Workflow Layer</h3>
+          <ul>
+            <li><code>session_router</code></li>
+            <li><code>profile_collector</code></li>
+            <li><code>health_analyser</code></li>
+            <li><code>preference_detector</code></li>
+            <li><code>plan_generator</code></li>
+            <li><code>plan_explainer</code></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 style="margin-top: 0;">State Layer</h3>
+          <ul>
+            <li><code>messages</code></li>
+            <li><code>profile</code></li>
+            <li><code>health</code></li>
+            <li><code>preferences</code></li>
+            <li><code>mealPlan</code></li>
+            <li><code>currentNode</code></li>
+            <li><code>nodeComplete</code></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Request Lifecycle</h3>
+      <pre>Client -> Controller -> Session Store (load)
+       -> LangGraph agent.invoke(state)
+       -> Session Store (save)
+       -> Minimal JSON response back to client</pre>
+
+      <h3>Why this architecture is good</h3>
+      <ul>
+        <li>The client is stateless; the server owns the workflow truth.</li>
+        <li>Each node owns only one state slice, reducing accidental coupling.</li>
+        <li>The router is the only orchestration point, so progression stays explainable.</li>
+        <li>The design is easy to productionize by replacing the in-memory store with Redis or a database.</li>
+      </ul>
+    </section>
+
+    <section class="sheet page-break">
+      <h2>Realistic Flow Diagram</h2>
+      <p class="section-intro">
+        This diagram shows the actual supervisor pattern used by the project. Workers do
+        their own job, then hand control back to the router. The router alone decides whether
+        to pause, continue, or resume the explainer for post-plan questions.
+      </p>
+
+      <div class="flow-wrap">
+        <svg viewBox="0 0 980 860" width="100%" aria-label="NutritionAIagents workflow diagram">
+          <defs>
+            <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+              <path d="M0,0 L0,6 L9,3 z" fill="#64747b"></path>
+            </marker>
+            <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#6c5b47" flood-opacity="0.12" />
+            </filter>
+          </defs>
+
+          <rect x="372" y="26" rx="20" ry="20" width="236" height="62" fill="#ffffff" stroke="#c7b8a3" filter="url(#softShadow)"></rect>
+          <text x="490" y="64" text-anchor="middle" font-size="24" font-weight="700">START</text>
+
+          <rect x="316" y="126" rx="22" ry="22" width="348" height="82" fill="#eef6f3" stroke="#8ab9ac" filter="url(#softShadow)"></rect>
+          <text x="490" y="163" text-anchor="middle" font-size="28" font-weight="700" fill="#17594a">session_router</text>
+          <text x="490" y="190" text-anchor="middle" font-size="16" fill="#4b6660">Decides next worker or pauses at END</text>
+
+          <rect x="80" y="278" rx="18" ry="18" width="240" height="86" fill="#f5fbf8" stroke="#7db8a1"></rect>
+          <text x="200" y="316" text-anchor="middle" font-size="24" font-weight="700">profile_collector</text>
+          <text x="200" y="342" text-anchor="middle" font-size="15" fill="#55666c">Age, gender, activity level</text>
+
+          <rect x="376" y="278" rx="18" ry="18" width="228" height="86" fill="#fff5fb" stroke="#d48db4"></rect>
+          <text x="490" y="316" text-anchor="middle" font-size="24" font-weight="700">health_analyser</text>
+          <text x="490" y="342" text-anchor="middle" font-size="15" fill="#6f5964">Weight, height, BMI, calories</text>
+
+          <rect x="660" y="278" rx="18" ry="18" width="240" height="86" fill="#f4f8ff" stroke="#7ea8e0"></rect>
+          <text x="780" y="316" text-anchor="middle" font-size="24" font-weight="700">preference_detector</text>
+          <text x="780" y="342" text-anchor="middle" font-size="15" fill="#526174">Location and food preferences</text>
+
+          <rect x="226" y="486" rx="18" ry="18" width="260" height="92" fill="#f6fbf2" stroke="#95c07f"></rect>
+          <text x="356" y="525" text-anchor="middle" font-size="24" font-weight="700">plan_generator</text>
+          <text x="356" y="552" text-anchor="middle" font-size="15" fill="#5c6f58">Creates weekly meal plan JSON</text>
+
+          <rect x="548" y="486" rx="18" ry="18" width="260" height="92" fill="#fff4f6" stroke="#d59aa9"></rect>
+          <text x="678" y="525" text-anchor="middle" font-size="24" font-weight="700">plan_explainer</text>
+          <text x="678" y="552" text-anchor="middle" font-size="15" fill="#6f5960">Explains plan and handles follow-up</text>
+
+          <rect x="390" y="710" rx="20" ry="20" width="200" height="62" fill="#ffffff" stroke="#c7b8a3" filter="url(#softShadow)"></rect>
+          <text x="490" y="748" text-anchor="middle" font-size="24" font-weight="700">END</text>
+
+          <path d="M490 88 L490 126" stroke="#64747b" stroke-width="3.5" fill="none" marker-end="url(#arrow)"></path>
+
+          <path d="M430 208 C370 232, 278 248, 218 278" stroke="#6a8d81" stroke-width="3" fill="none" marker-end="url(#arrow)"></path>
+          <path d="M490 208 L490 278" stroke="#8e7482" stroke-width="3" fill="none" marker-end="url(#arrow)"></path>
+          <path d="M550 208 C612 232, 700 248, 760 278" stroke="#6e88a8" stroke-width="3" fill="none" marker-end="url(#arrow)"></path>
+          <path d="M460 208 C420 286, 390 394, 360 486" stroke="#7b9770" stroke-width="3" fill="none" marker-end="url(#arrow)"></path>
+          <path d="M520 208 C560 286, 620 394, 672 486" stroke="#ad7f8c" stroke-width="3" fill="none" marker-end="url(#arrow)"></path>
+          <path d="M490 208 L490 710" stroke="#8f8a84" stroke-dasharray="8 8" stroke-width="2.5" fill="none" marker-end="url(#arrow)"></path>
+
+          <path d="M200 364 C200 432, 310 412, 420 208" stroke="#5f9f8b" stroke-width="2.8" fill="none" marker-end="url(#arrow)"></path>
+          <path d="M490 364 C490 428, 490 428, 490 208" stroke="#cf86a8" stroke-width="2.8" fill="none" marker-end="url(#arrow)"></path>
+          <path d="M780 364 C780 430, 648 410, 560 208" stroke="#7ea8e0" stroke-width="2.8" fill="none" marker-end="url(#arrow)"></path>
+          <path d="M356 578 C356 648, 430 650, 472 208" stroke="#8db56f" stroke-width="2.8" fill="none" marker-end="url(#arrow)"></path>
+          <path d="M678 578 C678 648, 560 646, 510 208" stroke="#d2929f" stroke-width="2.8" fill="none" marker-end="url(#arrow)"></path>
+
+          <text x="796" y="446" font-size="15" fill="#5b6970">Normal progression is router-driven.</text>
+          <text x="796" y="467" font-size="15" fill="#5b6970">Workers always hand control back.</text>
+          <text x="796" y="488" font-size="15" fill="#5b6970">Router either advances or pauses.</text>
+        </svg>
+      </div>
+
+      <div class="callout">
+        Interview line: “I intentionally moved to a supervisor graph so worker nodes do not
+        decide orchestration directly. That makes the progression auditable, resumable, and
+        easier to harden for production.”
+      </div>
+    </section>
+
+    <section class="sheet page-break">
+      <h2>Design Patterns and Why They Matter</h2>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3 style="margin-top: 0;">Supervisor Pattern</h3>
+          <p>The router is the single decision-maker for progression and pause behavior.</p>
+        </div>
+        <div class="card">
+          <h3 style="margin-top: 0;">State Ownership</h3>
+          <p>Each worker owns one state slice, which keeps responsibilities narrow and predictable.</p>
+        </div>
+        <div class="card">
+          <h3 style="margin-top: 0;">Step Executor</h3>
+          <p>Each HTTP request runs one graph invocation using previously persisted session state.</p>
+        </div>
+      </div>
+
+      <h3>Why LangGraph instead of one big prompt?</h3>
+      <ul>
+        <li>The conversation is multi-turn and structured.</li>
+        <li>Different stages need different prompts, outputs, and validation logic.</li>
+        <li>The system must resume from intermediate steps after every user turn.</li>
+        <li>The final explainer needs access to saved plan data and session history.</li>
+      </ul>
+
+      <h3>Why combine heuristics with LLM parsing?</h3>
+      <ul>
+        <li>Replies like <code>55</code>, <code>170 cm</code>, or <code>none</code> are better handled deterministically.</li>
+        <li>Heuristics reduce avoidable model dependence for simple extraction.</li>
+        <li>The LLM still handles broader natural-language variations when the input is less structured.</li>
+      </ul>
+
+      <h3>Why keep the client stateless?</h3>
+      <ul>
+        <li>The server remains the source of truth for workflow state.</li>
+        <li>It reduces client-side state corruption risk.</li>
+        <li>It makes session recovery and multi-turn orchestration easier to control.</li>
+      </ul>
+    </section>
+
+    <section class="sheet page-break">
+      <h2>Node Responsibilities</h2>
+      <p class="section-intro">
+        The project is easiest to explain when you present it as five focused workers plus one router.
+      </p>
+
+      <div class="card">
+        <h3 style="margin-top: 0;">1. <code>profile_collector</code></h3>
+        <p>Collects age, gender, and activity level. If something is missing, it asks the next question. If complete, it marks the stage complete and returns control to the router.</p>
+      </div>
+
+      <div class="card" style="margin-top: 12px;">
+        <h3 style="margin-top: 0;">2. <code>health_analyser</code></h3>
+        <p>Collects weight and height, then computes BMI, BMR, daily calories, and BMI category. Uses numeric heuristics plus LLM extraction.</p>
+      </div>
+
+      <div class="card" style="margin-top: 12px;">
+        <h3 style="margin-top: 0;">3. <code>preference_detector</code></h3>
+        <p>Collects country, state, diet style, allergies, cuisine preference, and disliked foods. Handles replies like <code>none</code> reliably through local parsing.</p>
+      </div>
+
+      <div class="card" style="margin-top: 12px;">
+        <h3 style="margin-top: 0;">4. <code>plan_generator</code></h3>
+        <p>Generates a seven-day meal plan with per-day nutrition totals. It uses the health and preference state to localize meals and respect restrictions.</p>
+      </div>
+
+      <div class="card" style="margin-top: 12px;">
+        <h3 style="margin-top: 0;">5. <code>plan_explainer</code></h3>
+        <p>Explains the generated plan in simple, polite language with an Indian motivational tone. It stays active for follow-up questions once the plan exists.</p>
+      </div>
+    </section>
+
+    <section class="sheet page-break">
+      <h2>API and State</h2>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3 style="margin-top: 0;">Primary Endpoints</h3>
+          <ul>
+            <li><code>POST /api/agent/message</code></li>
+            <li><code>POST /api/agent/reset</code></li>
+            <li><code>POST /api/agent/extension</code></li>
+          </ul>
+
+          <h3>Minimal response philosophy</h3>
+          <p>The controller returns only:</p>
+          <ul>
+            <li><code>success</code></li>
+            <li><code>response</code></li>
+            <li><code>currentNode</code></li>
+            <li><code>nodeComplete</code></li>
+            <li><code>mealPlan</code> only when it exists</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3 style="margin-top: 0;">State Model</h3>
+          <pre>{
+  messages,
+  profile,
+  health,
+  preferences,
+  mealPlan,
+  currentNode,
+  nodeComplete,
+  userId,
+  sessionId,
+  isFirstSession
+}</pre>
+        </div>
+      </div>
+
+      <h3>Current storage tradeoff</h3>
+      <div class="callout">
+        Session state is stored in memory with a JavaScript <code>Map</code>. This is ideal for rapid prototyping,
+        but it is not durable, not horizontally scalable, and not safe for production deployment across multiple instances.
+      </div>
+    </section>
+
+    <section class="sheet page-break">
+      <h2>Interview Talking Points</h2>
+
+      <h3>Strong summary answer</h3>
+      <p>
+        “This is a stateful conversational meal-planner backend. I used Express for the API,
+        LangGraph for orchestration, and a supervisor-router design so each node stays focused
+        on one responsibility. The backend owns the session state, which allows the workflow to
+        resume cleanly across multiple requests. The agent progresses from profile to health to
+        preferences, then generates a weekly meal plan and finally explains it in a conversational way.”
+      </p>
+
+      <h3>Production improvements you can mention</h3>
+      <ul>
+        <li>Replace in-memory sessions with Redis or persistent storage.</li>
+        <li>Add request validation and schema validation for model outputs.</li>
+        <li>Add retries, timeout guards, and structured logging around LLM calls.</li>
+        <li>Add test coverage for graph progression and node extraction behavior.</li>
+        <li>Add observability for node latency, failure rates, and session lifecycle.</li>
+      </ul>
+
+      <h3>What makes this stronger than a normal chatbot demo?</h3>
+      <ul>
+        <li>It demonstrates orchestration, not just prompting.</li>
+        <li>It models state ownership and progression semantics.</li>
+        <li>It shows practical engineering tradeoffs around resumability and control flow.</li>
+        <li>It supports a real post-generation conversational stage.</li>
+      </ul>
+
+      <div class="footer-note">
+        Recommended speaking angle: architecture, state flow, and design tradeoffs first. Prompt wording should be a secondary discussion.
+      </div>
+    </section>
+  </div>
+</body>
+</html>

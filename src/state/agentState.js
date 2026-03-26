@@ -40,10 +40,12 @@ export const AgentState = {
         preferences: {
             value:   (existing, updates) => ({ ...existing, ...updates }),
             default: () => ({
+                country:          null,
+                state:            null,
                 dietStyle:        null,
-                allergies:        [],
+                allergies:        null,
                 cuisinePreference: null,
-                dislikedFoods:    []
+                dislikedFoods:    null
             })
         },
 
@@ -136,7 +138,7 @@ export const NODE_META = {
     [NODES.PREFERENCE_DETECTOR]: {
         id:               3,
         label:            "Preference Detector",
-        description:      "Diet style and allergies",
+        description:      "Location, diet style and allergies",
         inputPlaceholder: "Enter your diet preferences..."
     },
     [NODES.PLAN_GENERATOR]: {
@@ -174,10 +176,12 @@ export const getInitialState = (userId, sessionId) => ({
         bmiCategory:   null
     },
     preferences: {
+        country:           null,
+        state:             null,
         dietStyle:         null,
-        allergies:         [],
+        allergies:         null,
         cuisinePreference: null,
-        dislikedFoods:     []
+        dislikedFoods:     null
     },
     mealPlan:       null,
     ragInsight:     null,
